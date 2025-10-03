@@ -19,6 +19,7 @@ add_executable(tex_paint
         common/third/imgui/imgui_widgets.cpp
         common/third/imgui/backends/imgui_impl_glfw.cpp
         common/third/imgui/backends/imgui_impl_opengl3.cpp
+        common/third/stb/stb_image.c
         common/utils/BezierRenderer.cpp
         common/utils/Callbacks.cpp
         common/utils/CEVersion.cpp
@@ -32,7 +33,6 @@ add_executable(tex_paint
         common/utils/Shaders.cpp
         common/utils/Texture.cpp
         common/utils/Window.cpp
-        src/main.cpp
 )
 
 # --- Incluimos los directorios ---
@@ -50,16 +50,15 @@ target_include_directories(tex_paint PRIVATE
 
 # --- Enlazamos las librerías ---
 # Le decimos a CMake que busque los archivos .lib en esta carpeta.
-link_directories(
-        libs/glfw/lib-vc2022 # <--- Eliminamos la línea de GLEW
-)
+
 
 # Enlazamos nuestro programa con los archivos de librería específicos.
+
 target_link_libraries(tex_paint PRIVATE
         opengl32
-        glfw3 # <--- Eliminamos 'glew32s' de aquí
+        # Usamos una variable de CMake para construir la ruta absoluta
+        "${CMAKE_CURRENT_SOURCE_DIR}/libs/glfw/lib-vc2022/glfw3.lib"
 )
-
 # --- ELIMINADO ---
 # La siguiente línea era para GLEW, ya no es necesaria.
 # target_compile_definitions(tex_paint PRIVATE GLEW_STATIC)
@@ -81,4 +80,9 @@ if(WIN32)
             ${CMAKE_CURRENT_SOURCE_DIR}/libs/glfw/lib-vc2022/glfw3.dll
             ${CMAKE_CURRENT_BINARY_DIR}
     )
+endif()
+
+# --- Agregamos flags para compatibilidad con MSVC ---
+if(MSVC)
+    target_compile_options(tex_paint PRIVATE "/permissive-")
 endif()

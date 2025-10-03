@@ -1,5 +1,6 @@
+#include <glad/glad.h>
 #include "Callbacks.hpp"
-
+ // ¡GLAD PRIMERO!
 #include <algorithm>
 #include <GLFW/glfw3.h>
 #include <glm/ext.hpp>

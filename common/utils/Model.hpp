@@ -16,7 +16,7 @@ struct Model {
 	
 	Model(Geometry &&g, const Material &m, int flags) 
 		: buffers(g,flags&fDynamic), material(m), 
-		  texture(m.texture.empty() or (flags&fNoTextures) 
+		  texture(m.texture.empty() || (flags&fNoTextures)
 	           ? Texture() 
 			   : Texture(m.texture, model2texture(flags)) )
 	{

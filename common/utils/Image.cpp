@@ -13,6 +13,34 @@ Image::Image(const std::string &fname, bool flipY) {
 	m_channels = 4; // Nos aseguramos de que siempre sean 4 canales
 }
 
+Image::Image(const Image& other) : m_width(other.m_width), m_height(other.m_height), m_channels(other.m_channels) {
+	if (other.m_data) {
+		size_t size = m_width * m_height * m_channels;
+		m_data = new unsigned char[size];
+		std::copy(other.m_data, other.m_data + size, m_data);
+	} else {
+		m_data = nullptr;
+	}
+}
+
+Image& Image::operator=(const Image& other) {
+	if (this != &other) { // Evitar auto-asignación
+		delete[] m_data; // Liberar memoria vieja
+
+		m_width = other.m_width;
+		m_height = other.m_height;
+		m_channels = other.m_channels;
+
+		if (other.m_data) {
+			size_t size = m_width * m_height * m_channels;
+			m_data = new unsigned char[size];
+			std::copy(other.m_data, other.m_data + size, m_data);
+		} else {
+			m_data = nullptr;
+		}
+	}
+	return *this;
+}
 // NUEVO: Constructor para crear una imagen en blanco
 Image::Image(int width, int height) {
 	m_width = width;

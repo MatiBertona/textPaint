@@ -6,7 +6,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/ext.hpp>
-#include <glm/glm.hpp>q
+#include <glm/glm.hpp>
 #include "Callbacks.hpp"
 #include "Debug.hpp"
 #include "Model.hpp"
@@ -137,7 +137,7 @@ int main() {
 		glFinish();
 		glfwSwapBuffers(aux_window);
 		
-	} while( (not glfwWindowShouldClose(main_window)) and (not glfwWindowShouldClose(aux_window)) );
+	} while( (! glfwWindowShouldClose(main_window)) and (! glfwWindowShouldClose(aux_window)) );
 }
 
 
@@ -312,7 +312,7 @@ void auxMouseMoveCallback(GLFWwindow* window, double xpos, double ypos) {
 void mainMouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
 	if (ImGui::GetIO().WantCaptureMouse) return;
 	if (action==GLFW_PRESS) {
-		if (mods!=0 or button==GLFW_MOUSE_BUTTON_RIGHT) {
+		if (mods!=0 || button==GLFW_MOUSE_BUTTON_RIGHT) {
 			mouse_action = MouseAction::ManipulateView;
 			common_callbacks::mouseButtonCallback(window, GLFW_MOUSE_BUTTON_LEFT, action, mods);
 			return;
